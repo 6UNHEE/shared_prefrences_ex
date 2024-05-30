@@ -8,11 +8,13 @@ class Shared {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  static Future<void> saveText(String text) async {
+  static saveText(String text) async {
     await _prefs.setString(_saveTextKey, text);
   }
 
-  static Future<void> getText() async {
-    _prefs.getString(_saveTextKey);
+  static Future<void> removeText() async {
+    await _prefs.remove(_saveTextKey);
   }
+
+  static String get getText => _prefs.getString(_saveTextKey) ?? '';
 }

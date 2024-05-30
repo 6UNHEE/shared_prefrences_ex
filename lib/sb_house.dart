@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_prefrences_ex/shared.dart';
 
 class SbHouse extends StatefulWidget {
   const SbHouse({super.key});
@@ -8,13 +9,16 @@ class SbHouse extends StatefulWidget {
 }
 
 class _SbHouseState extends State<SbHouse> {
-  bool _isChecked = false;
-  final _textController = TextEditingController();
+  bool _isChecked = Shared.getText.isNotEmpty;
+  final _textController = TextEditingController(text: Shared.getText);
   bool _isChanged = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('SB_HOUSE'),
+      ),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -64,9 +68,16 @@ class _SbHouseState extends State<SbHouse> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  /* 입력을 잘 받는지 확인 -> 확인 완료 잘 받음 ^ㅡ^
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(_textController.text)),
                   );
+                  */
+                  if (_isChecked) {
+                    Shared.saveText(_textController.text);
+                  } else {
+                    Shared.removeText();
+                  }
                 },
                 child: const Text('저장'),
               )
